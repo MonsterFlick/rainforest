@@ -34,25 +34,25 @@
 
 :root {
   --radius: 0.625rem;
-  --background: hsl(140 45% 8%);
-  --foreground: hsl(0 0% 100%);
-  --card: hsl(140 30% 12%);
-  --card-foreground: hsl(0 0% 100%);
-  --popover: hsl(140 30% 12%);
-  --popover-foreground: hsl(0 0% 100%);
-  --primary: hsl(0 0% 100%);
-  --primary-foreground: hsl(0 0% 4%);
-  --secondary: hsl(0 0% 10%);
-  --secondary-foreground: hsl(0 0% 100%);
-  --muted: hsl(0 0% 10%);
-  --muted-foreground: hsl(240 5% 85%);
-  --accent: hsl(0 0% 10%);
-  --accent-foreground: hsl(0 0% 100%);
-  --destructive: hsl(0 84% 60%);
+  --background: hsl(40 15% 91%);
+  --foreground: hsl(140 10% 11%);
+  --card: hsl(40 20% 95%);
+  --card-foreground: hsl(140 10% 11%);
+  --popover: hsl(40 20% 95%);
+  --popover-foreground: hsl(140 10% 11%);
+  --primary: hsl(140 20% 15%);
+  --primary-foreground: hsl(40 20% 97%);
+  --secondary: hsl(40 12% 87%);
+  --secondary-foreground: hsl(140 10% 11%);
+  --muted: hsl(40 12% 87%);
+  --muted-foreground: hsl(140 6% 36%);
+  --accent: hsl(40 12% 87%);
+  --accent-foreground: hsl(140 10% 11%);
+  --destructive: hsl(0 84% 40%);
   --destructive-foreground: hsl(0 0% 100%);
-  --border: hsl(0 0% 18%);
-  --input: hsl(0 0% 18%);
-  --ring: hsl(0 0% 100%);
+  --border: hsl(40 10% 78%);
+  --input: hsl(40 10% 78%);
+  --ring: hsl(140 20% 15%);
 }
 
 @layer base {
@@ -125,3 +125,157 @@
 @utility animate-fade-in {
   animation: fade-in 0.4s ease-out both;
 }
+
+/* Custom Cursor Hiding on Desktop */
+@media (min-width: 768px) {
+  html, body, a, button, [role="button"], input, select, textarea {
+    cursor: none !important;
+  }
+}
+
+/* Shimmer Sweep Animation Utility */
+@utility shimmer-hover {
+  position: relative;
+  overflow: hidden;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transform: translateX(-100%) skewX(-15deg);
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.25) 30%,
+      rgba(255, 255, 255, 0.5) 60%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    transition: none;
+  }
+
+  &:hover::after {
+    transform: translateX(100%) skewX(-15deg);
+    transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
+/* Audio Player Wave Animation */
+@keyframes bounce-wave {
+  0%, 100% {
+    transform: scaleY(0.25);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+@utility animate-wave-1 {
+  animation: bounce-wave 0.8s ease-in-out infinite;
+}
+@utility animate-wave-2 {
+  animation: bounce-wave 0.6s ease-in-out infinite;
+  animation-delay: 0.15s;
+}
+@utility animate-wave-3 {
+  animation: bounce-wave 0.9s ease-in-out infinite;
+  animation-delay: 0.3s;
+}
+@utility animate-wave-4 {
+  animation: bounce-wave 0.7s ease-in-out infinite;
+  animation-delay: 0.45s;
+}
+
+/* Split Word Cinematic Reveal */
+@keyframes split-word-rise {
+  from {
+    transform: translateY(115%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@utility animate-word-rise {
+  display: inline-block;
+  will-change: transform;
+  animation: split-word-rise 1.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Immersive Gallery Custom Animations */
+@keyframes clip-reveal {
+  from {
+    clip-path: inset(100% 0 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes ken-burns {
+  from {
+    transform: scale(1.02);
+  }
+  to {
+    transform: scale(1.12);
+  }
+}
+
+@keyframes fade-rise-text {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@utility animate-clip-reveal {
+  animation: clip-reveal 1.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@utility animate-ken-burns {
+  animation: ken-burns 12s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@utility animate-fade-rise-text {
+  animation: fade-rise-text 1.0s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Takeover Panel Transitions */
+@keyframes slide-left-panel {
+  from {
+    transform: scale(1.05);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-right-panel {
+  from {
+    transform: translateX(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@utility animate-slide-left-panel {
+  animation: slide-left-panel 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@utility animate-slide-right-panel {
+  animation: slide-right-panel 1.0s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+
+
