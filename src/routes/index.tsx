@@ -207,11 +207,11 @@ function Index() {
         <div className="absolute inset-0 z-[1] bg-black/50" />
 
         <div className="relative z-10 flex flex-col min-h-screen text-[#faf9f6]">
-          <nav className="flex flex-row justify-between items-center px-8 py-6 max-w-7xl mx-auto w-full">
+          <nav className="flex flex-row justify-between items-center px-4 py-4 sm:px-8 sm:py-6 max-w-7xl mx-auto w-full">
             <a 
               href="#" 
               onClick={(e) => { e.preventDefault(); scrollToSection(-1); }}
-              className="text-3xl tracking-tight text-[#faf9f6]" 
+              className="text-xl sm:text-2xl md:text-3xl tracking-tight text-[#faf9f6]" 
               style={serif}
             >
               Rainforest Farms<sup className="text-xs">®</sup>
@@ -236,12 +236,12 @@ function Index() {
               ))}
             </div>
 
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 sm:gap-4">
               <AudioPlayer />
               <Magnetic>
                 <button 
                   onClick={() => scrollToSection(5)}
-                  className="liquid-glass shimmer-hover rounded-full px-6 py-2.5 text-sm cursor-pointer"
+                  className="liquid-glass shimmer-hover rounded-full px-4 py-2 text-xs sm:px-6 sm:py-2.5 sm:text-sm cursor-pointer"
                 >
                   Book a Stay
                 </button>
@@ -499,28 +499,28 @@ function AmenitySlide({ item, idx, isActive, setActive, onExplore }: AmenitySlid
   }, [idx, setActive]);
 
   return (
-    <section ref={slideRef} onMouseMove={(e) => { if (!slideRef.current) return; const { left, top, width, height } = slideRef.current.getBoundingClientRect(); setMousePos({ x: (e.clientX - left) / width - 0.5, y: (e.clientY - top) / height - 0.5 }); }} className="amenity-slide snap-start w-full h-screen relative flex items-center justify-center overflow-hidden px-8 md:px-24">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 w-full max-w-7xl items-center pt-24 pb-12 relative">
+    <section ref={slideRef} onMouseMove={(e) => { if (!slideRef.current) return; const { left, top, width, height } = slideRef.current.getBoundingClientRect(); setMousePos({ x: (e.clientX - left) / width - 0.5, y: (e.clientY - top) / height - 0.5 }); }} className="amenity-slide snap-start w-full h-screen relative flex items-center justify-center overflow-hidden px-4 sm:px-8 md:px-24">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-8 w-full max-w-7xl items-center pt-20 pb-6 lg:pt-24 lg:pb-12 relative">
         {/* Mobile Section Title (First slide only) */}
         {idx === 0 && (
           <div className="block lg:hidden w-full absolute top-8 left-0">
-            <h2 className="text-2xl text-foreground font-normal tracking-tight" style={{ fontFamily: "'Instrument Serif', serif" }}>Curated Experiences</h2>
+            <h2 className="text-xl text-foreground font-normal tracking-tight" style={{ fontFamily: "'Instrument Serif', serif" }}>Curated Experiences</h2>
           </div>
         )}
 
         {/* Content Column (Pushed to left on desktop, bottom on mobile) */}
-        <div className="lg:col-span-5 lg:order-1 flex flex-col justify-center text-foreground z-10 mt-8 lg:mt-0">
-          <div className={`text-xs uppercase tracking-[0.25em] font-semibold text-emerald-800/80 mb-3 transition-all duration-700 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>{item.location}</div>
-          <p className={`font-['Pinyon_Script'] text-4xl text-emerald-800/90 leading-none transition-all duration-700 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>{item.subtitle}</p>
-          <h3 className="text-4xl md:text-6xl font-light tracking-tight mt-1 mb-6" style={{ fontFamily: "'Playfair Display', serif", opacity: inView ? 1 : 0, transform: inView ? "translateY(0)" : "translateY(30px)", transition: "opacity 1s, transform 1s" }}>{item.title}</h3>
-          <p className="text-sm md:text-base leading-relaxed text-muted-foreground max-w-md mb-8" style={{ opacity: inView ? 1 : 0, transform: inView ? "translateY(0)" : "translateY(30px)", transition: "opacity 1s, transform 1s" }}>{item.fullDesc}</p>
-          <div style={{ opacity: inView ? 1 : 0, transform: inView ? "translateY(0)" : "translateY(30px)", transition: "opacity 1s, transform 1s" }}>
-            <Magnetic><button onClick={() => onExplore(item)} className="group flex items-center gap-3 text-xs uppercase tracking-[0.2em] font-semibold border-b border-foreground/35 pb-2 hover:border-emerald-800 transition-all"><span>Explore Experience</span><svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14m-7 7 7-7-7-7"/></svg></button></Magnetic>
+        <div className="order-2 lg:order-1 lg:col-span-5 flex flex-col justify-center text-foreground z-10 mt-2 lg:mt-0">
+          <div className={`text-[10px] sm:text-xs uppercase tracking-[0.25em] font-semibold text-emerald-800/80 mb-1 lg:mb-3 transition-all duration-700 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>{item.location}</div>
+          <p className={`font-['Pinyon_Script'] text-2xl sm:text-4xl text-emerald-800/90 leading-none transition-all duration-700 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>{item.subtitle}</p>
+          <h3 className="text-2xl sm:text-4xl lg:text-6xl font-light tracking-tight mt-0.5 mb-2 lg:mb-6" style={{ fontFamily: "'Playfair Display', serif", opacity: inView ? 1 : 0, transform: inView ? "translateY(0)" : "translateY(20px)", transition: "opacity 1s, transform 1s" }}>{item.title}</h3>
+          <p className="text-xs sm:text-sm lg:text-base leading-relaxed text-muted-foreground max-w-md mb-4 lg:mb-8" style={{ opacity: inView ? 1 : 0, transform: inView ? "translateY(0)" : "translateY(20px)", transition: "opacity 1s, transform 1s" }}>{item.fullDesc}</p>
+          <div style={{ opacity: inView ? 1 : 0, transform: inView ? "translateY(0)" : "translateY(20px)", transition: "opacity 1s, transform 1s" }}>
+            <Magnetic><button onClick={() => onExplore(item)} className="group flex items-center gap-2 lg:gap-3 text-[10px] sm:text-xs uppercase tracking-[0.2em] font-semibold border-b border-foreground/35 pb-1 lg:pb-2 hover:border-emerald-800 transition-all cursor-pointer"><span>Explore Experience</span><svg className="w-3.5 h-3.5 lg:w-4 lg:h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14m-7 7 7-7-7-7"/></svg></button></Magnetic>
           </div>
         </div>
 
         {/* Image Column (Pushed to right on desktop, top on mobile) */}
-        <div className="lg:col-span-7 lg:order-2 relative w-full h-[40vh] lg:h-[65vh] rounded-3xl overflow-hidden shadow-2xl cursor-pointer" onClick={() => onExplore(item)}>
+        <div className="order-1 lg:order-2 lg:col-span-7 relative w-full h-[28vh] sm:h-[35vh] lg:h-[65vh] rounded-2xl lg:rounded-3xl overflow-hidden shadow-2xl cursor-pointer" onClick={() => onExplore(item)}>
           <div className={`absolute inset-0 z-10 bg-[#eae7e1] transition-transform duration-[1200ms] ${inView ? "translate-y-full" : "translate-y-0"}`} />
           <img 
             src={item.image} 
@@ -563,11 +563,13 @@ function FooterSlide({ isActive, setActive }: FooterSlideProps) {
       <div className="flex flex-col items-center justify-center text-center max-w-4xl mx-auto flex-1 select-none">
         <p className="font-['Pinyon_Script'] text-3xl md:text-5xl text-emerald-800 transition-all duration-1000 delay-100" style={{ opacity: inView ? 0.9 : 0, transform: inView ? "translate3d(0,0,0)" : "translate3d(0,20px,0)" }}>Your escape awaits</p>
         <h2 className="text-4xl sm:text-6xl md:text-7xl font-light tracking-tight text-[#faf9f6] mt-4 mb-10 transition-all duration-1000 delay-300" style={{ fontFamily: "'Playfair Display', serif", opacity: inView ? 1 : 0, transform: inView ? "translate3d(0,0,0)" : "translate3d(0,30px,0)" }}>Let the forest breathe, and time slow down.</h2>
-        <div className="transition-all duration-1000 delay-500" style={{ opacity: inView ? 1 : 0, transform: inView ? "translate3d(0,0,0)" : "translate3d(0,30px,0)" }}>
+        <div className="transition-all duration-1000 delay-500 mt-6" style={{ opacity: inView ? 1 : 0, transform: inView ? "translate3d(0,0,0)" : "translate3d(0,30px,0)" }}>
           <Magnetic>
-            <button className="relative w-44 h-44 rounded-full border border-[#faf9f6]/25 hover:border-emerald-800 text-[#faf9f6] flex items-center justify-center hover:scale-105 active:scale-95 transition-all duration-500 bg-[#faf9f6]/5 backdrop-blur-sm cursor-pointer shadow-lg group">
-              <div className="absolute inset-0 rounded-full bg-emerald-800 scale-0 group-hover:scale-100 transition-transform duration-500 z-0" />
-              <span className="relative z-10 text-xs uppercase tracking-[0.25em] font-semibold font-body group-hover:text-[#faf9f6]">Book a Stay</span>
+            <button className="relative px-12 py-5 rounded-full border border-[#faf9f6]/20 text-[#faf9f6] hover:text-[#0f110f] hover:border-emerald-800 overflow-hidden cursor-pointer shadow-lg transition-colors duration-500 group select-none">
+              <div className="absolute inset-0 bg-[#faf9f6] translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out z-0" />
+              <span className="relative z-10 text-xs uppercase tracking-[0.25em] font-semibold font-body">
+                Book a Stay
+              </span>
             </button>
           </Magnetic>
         </div>

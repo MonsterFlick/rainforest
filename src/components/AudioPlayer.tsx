@@ -82,10 +82,10 @@ export function AudioPlayer() {
   return (
     <button
       onClick={togglePlayback}
-      className="flex items-center gap-3 px-4 py-2 rounded-full border border-[#faf9f6]/15 bg-[#faf9f6]/5 hover:bg-[#faf9f6]/10 active:scale-95 transition-all text-[#faf9f6] cursor-pointer text-xs select-none group"
+      className="flex items-center gap-2 px-2.5 py-2 sm:gap-3 sm:px-4 sm:py-2 rounded-full border border-[#faf9f6]/15 bg-[#faf9f6]/5 hover:bg-[#faf9f6]/10 active:scale-95 transition-all text-[#faf9f6] cursor-pointer text-xs select-none group"
       title="Toggle Rainforest Ambiance"
     >
-      <span className="uppercase tracking-[0.15em] font-medium text-[10px] text-[#faf9f6]/70 group-hover:text-[#faf9f6] transition-colors">
+      <span className="hidden sm:inline uppercase tracking-[0.15em] font-medium text-[10px] text-[#faf9f6]/70 group-hover:text-[#faf9f6] transition-colors">
         {isPlaying ? "Sound On" : "Sound Off"}
       </span>
 
