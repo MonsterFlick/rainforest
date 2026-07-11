@@ -111,6 +111,18 @@ function Index() {
   const bgColors = ["#eae7e1", "#dee3d7", "#d6e2e2", "#e8ded4", "#ebdccf", "#ded4d4", "#0f110f"];
   const currentBg = activeIndex === -1 ? bgColors[0] : bgColors[activeIndex + 1] || bgColors[bgColors.length - 1];
 
+  const scrollToSection = (idx: number) => {
+    if (mainRef.current) {
+      if (idx === -1) {
+        const hero = mainRef.current.querySelector("section");
+        if (hero) hero.scrollIntoView({ behavior: "smooth" });
+      } else {
+        const slides = mainRef.current.querySelectorAll(".amenity-slide");
+        if (slides[idx]) slides[idx].scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  };
+
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
@@ -196,7 +208,12 @@ function Index() {
 
         <div className="relative z-10 flex flex-col min-h-screen text-[#faf9f6]">
           <nav className="flex flex-row justify-between items-center px-8 py-6 max-w-7xl mx-auto w-full">
-            <a href="/" className="text-3xl tracking-tight text-[#faf9f6]" style={serif}>
+            <a 
+              href="#" 
+              onClick={(e) => { e.preventDefault(); scrollToSection(-1); }}
+              className="text-3xl tracking-tight text-[#faf9f6]" 
+              style={serif}
+            >
               Rainforest Farms<sup className="text-xs">®</sup>
             </a>
 
@@ -205,6 +222,13 @@ function Index() {
                 <a
                   key={link.label}
                   href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (link.label === "Home") scrollToSection(-1);
+                    else if (link.label === "Stays" || link.label === "About") scrollToSection(0);
+                    else if (link.label === "Journal") scrollToSection(2);
+                    else if (link.label === "Reach Us") scrollToSection(5);
+                  }}
                   className="text-sm text-[#faf9f6]/60 hover:text-[#faf9f6]"
                 >
                   {link.label}
@@ -215,7 +239,10 @@ function Index() {
             <div className="flex items-center gap-4">
               <AudioPlayer />
               <Magnetic>
-                <button className="liquid-glass shimmer-hover rounded-full px-6 py-2.5 text-sm cursor-pointer">
+                <button 
+                  onClick={() => scrollToSection(5)}
+                  className="liquid-glass shimmer-hover rounded-full px-6 py-2.5 text-sm cursor-pointer"
+                >
                   Book a Stay
                 </button>
               </Magnetic>
@@ -245,7 +272,10 @@ function Index() {
             </p>
 
             <Magnetic>
-              <button className="liquid-glass shimmer-hover rounded-full px-14 py-5 text-base mt-12 cursor-pointer">
+              <button 
+                onClick={() => scrollToSection(0)}
+                className="liquid-glass shimmer-hover rounded-full px-14 py-5 text-base mt-12 cursor-pointer"
+              >
                 Begin Your Escape
               </button>
             </Magnetic>
@@ -525,7 +555,7 @@ function FooterSlide({ isActive, setActive }: FooterSlideProps) {
   return (
     <section 
       ref={slideRef}
-      className={`snap-start w-full h-screen relative flex flex-col justify-between overflow-hidden px-8 md:px-24 transition-colors duration-1000 ${
+      className={`amenity-slide snap-start w-full h-screen relative flex flex-col justify-between overflow-hidden px-8 md:px-24 transition-colors duration-1000 ${
         isActive ? "bg-[#0f110f]" : "bg-background"
       }`}
     >

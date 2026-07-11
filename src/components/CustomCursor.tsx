@@ -7,7 +7,7 @@ export function CustomCursor() {
   const [cursorType, setCursorType] = useState<"default" | "explore" | "drag" | "close" | "hover">("default");
   const [isVisible, setIsVisible] = useState(false);
   const [isMobile, setIsMobile] = useState(true);
-  const [isPastHero, setIsPastHero] = useState(false);
+  const [isDarkBg, setIsDarkBg] = useState(true);
   const [mounted, setMounted] = useState(false); // Guard for SSR hydration mismatch
 
   // Mouse coordinate refs
@@ -38,9 +38,12 @@ export function CustomCursor() {
     const handleScroll = () => {
       const mainEl = document.querySelector("main");
       if (mainEl) {
-        setIsPastHero(mainEl.scrollTop > window.innerHeight * 0.9);
+        const scrollPos = mainEl.scrollTop;
+        const h = window.innerHeight;
+        // Dark background on Hero (scroll < 0.9h) and Footer (scroll > 5.4h)
+        setIsDarkBg(scrollPos < h * 0.9 || scrollPos > h * 5.4);
       } else {
-        setIsPastHero(window.scrollY > window.innerHeight * 0.9);
+        setIsDarkBg(true);
       }
     };
 
@@ -132,11 +135,11 @@ export function CustomCursor() {
         // Charcoal circle on details modal close
         return "w-14 h-14 bg-[#1a1c19] border-transparent text-[#faf9f6] scale-100 flex items-center justify-center";
       case "hover":
-        return isPastHero 
+        return !isDarkBg 
           ? "w-12 h-12 bg-neutral-900/10 border-neutral-900/40 scale-100" 
           : "w-12 h-12 bg-[#faf9f6]/10 border-[#faf9f6]/40 scale-100";
       default:
-        return isPastHero
+        return !isDarkBg
           ? "w-8 h-8 bg-transparent border-neutral-900/60 scale-100"
           : "w-8 h-8 bg-transparent border-[#faf9f6]/60 scale-100";
     }
@@ -176,7 +179,7 @@ export function CustomCursor() {
       <div
         ref={dotRef}
         className={`fixed top-0 left-0 w-1.5 h-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full pointer-events-none z-[10000] transition-all duration-200 ease-out will-change-transform ${getDotStyles()} ${
-          isPastHero ? "bg-neutral-950" : "bg-[#faf9f6]"
+          !isDarkBg ? "bg-neutral-950" : "bg-[#faf9f6]"
         }`}
       />
     </>
