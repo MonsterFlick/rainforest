@@ -6,12 +6,57 @@ export function AudioPlayer() {
 
   useEffect(() => {
     // Initialize HTML5 Audio with a soft looping rain forest sound
-    const audio = new Audio("https://assets.codepen.io/16584/rain.mp3");
+    const audio = new Audio("/audio.mp3");
     audio.loop = true;
     audio.volume = 0.45; // Soft volume so it's not obtrusive
     audioRef.current = audio;
 
+    const playAudio = () => {
+      audio.play()
+        .then(() => {
+          setIsPlaying(true);
+          removeInteractionListeners();
+        })
+        .catch((err) => {
+          console.log("Autoplay waiting for first user interaction gesture:", err);
+        });
+    };
+
+    const handleInteraction = () => {
+      playAudio();
+    };
+
+    const removeInteractionListeners = () => {
+      document.removeEventListener("click", handleInteraction);
+      document.removeEventListener("keydown", handleInteraction);
+      document.removeEventListener("touchstart", handleInteraction);
+      document.removeEventListener("mousemove", handleInteraction);
+      document.removeEventListener("pointerdown", handleInteraction);
+      window.removeEventListener("wheel", handleInteraction);
+      
+      const mainEl = document.querySelector("main");
+      if (mainEl) mainEl.removeEventListener("scroll", handleInteraction);
+    };
+
+    // Attempt immediate playback
+    playAudio();
+
+    // Listen for any gesture on the document if immediate play fails
+    document.addEventListener("click", handleInteraction);
+    document.addEventListener("keydown", handleInteraction);
+    document.addEventListener("touchstart", handleInteraction);
+    document.addEventListener("mousemove", handleInteraction);
+    document.addEventListener("pointerdown", handleInteraction);
+    window.addEventListener("wheel", handleInteraction);
+    
+    // Add scroll event listener to the main snapping container
+    setTimeout(() => {
+      const mainEl = document.querySelector("main");
+      if (mainEl) mainEl.addEventListener("scroll", handleInteraction);
+    }, 100);
+
     return () => {
+      removeInteractionListeners();
       if (audioRef.current) {
         audioRef.current.pause();
         audioRef.current = null;
@@ -43,28 +88,24 @@ export function AudioPlayer() {
       <span className="uppercase tracking-[0.15em] font-medium text-[10px] text-[#faf9f6]/70 group-hover:text-[#faf9f6] transition-colors">
         {isPlaying ? "Sound On" : "Sound Off"}
       </span>
-      
+
       {/* Animated wave bars */}
       <div className="flex items-end gap-[3px] h-3 w-[15px] overflow-hidden">
-        <div 
-          className={`w-[2px] bg-[#faf9f6] rounded-full origin-bottom transition-all duration-300 ${
-            isPlaying ? "animate-wave-1 h-3" : "h-[3px] scale-y-[0.3]"
-          }`}
+        <div
+          className={`w-[2px] bg-[#faf9f6] rounded-full origin-bottom transition-all duration-300 ${isPlaying ? "animate-wave-1 h-3" : "h-[3px] scale-y-[0.3]"
+            }`}
         />
-        <div 
-          className={`w-[2px] bg-[#faf9f6] rounded-full origin-bottom transition-all duration-300 ${
-            isPlaying ? "animate-wave-2 h-3" : "h-[3px] scale-y-[0.3]"
-          }`}
+        <div
+          className={`w-[2px] bg-[#faf9f6] rounded-full origin-bottom transition-all duration-300 ${isPlaying ? "animate-wave-2 h-3" : "h-[3px] scale-y-[0.3]"
+            }`}
         />
-        <div 
-          className={`w-[2px] bg-[#faf9f6] rounded-full origin-bottom transition-all duration-300 ${
-            isPlaying ? "animate-wave-3 h-3" : "h-[3px] scale-y-[0.3]"
-          }`}
+        <div
+          className={`w-[2px] bg-[#faf9f6] rounded-full origin-bottom transition-all duration-300 ${isPlaying ? "animate-wave-3 h-3" : "h-[3px] scale-y-[0.3]"
+            }`}
         />
-        <div 
-          className={`w-[2px] bg-[#faf9f6] rounded-full origin-bottom transition-all duration-300 ${
-            isPlaying ? "animate-wave-4 h-3" : "h-[3px] scale-y-[0.3]"
-          }`}
+        <div
+          className={`w-[2px] bg-[#faf9f6] rounded-full origin-bottom transition-all duration-300 ${isPlaying ? "animate-wave-4 h-3" : "h-[3px] scale-y-[0.3]"
+            }`}
         />
       </div>
     </button>
